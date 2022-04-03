@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>International Phone Numbers</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+  <script>
+    function onStateFilter(id){
+      window.location.assign('http://localhost:8080/state?state='+id);
+    }
+    function onRadioChange(id){
+      window.location.assign('http://localhost:8080/country?country='+id);
+    }
+    function onStart(){
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const country = urlParams.get('country');
+      const state = urlParams.get('state');
+      if(country == null){
+        if (state == "valid"){
+          document.getElementById("valid").checked = true;
+        }
+        else if(state == "invalid"){
+          document.getElementById("invalid").checked = true;
+        }
+        else {
+          document.getElementById("All").checked = true;
+        }
+      }
+      else document.getElementById(country).checked = true;
+    }
+  </script>
+</head>
+<body onload="onStart()">
+<div class="gridContainer">
+  <h1 id="pageTitle">International Phone Numbers</h1>
+  <h3 id = "filter_title">filter criteria</h3>
+  <div class="filter_radios">
+    <input id="All"   name="countries" class = "radioB" onclick="onRadioChange(this.id)" type="radio"  />
+    <input id="Cameroon" name="countries" class = "radioB" onclick="onRadioChange(this.id)" type="radio" />
+    <input id="Ethiopia"  name="countries" class = "radioB" onclick="onRadioChange(this.id)" type="radio" />
+    <input id="Morocco"  name="countries" class = "radioB" onclick="onRadioChange(this.id)" type="radio" />
+    <input id="Mozambique"  name="countries" class = "radioB" onclick="onRadioChange(this.id)"  type="radio" />
+    <input id="Uganda"  name="countries" class = "radioB" onclick="onRadioChange(this.id)" type="radio" />
+    <input id="valid"   name="state" class = "radioB" onclick="onStateFilter(this.id)" type="radio"  />
+    <input id="invalid" name="state" class = "radioB" onclick="onStateFilter(this.id)" type="radio" />
+  </div>
+  <div class="filter_label">
+    <label for="All">All</label>
+    <label for="Cameroon">Cameroon</label>
+    <label for="Ethiopia">Ethiopia</label>
+    <label for="Morocco">Morocco</label>
+    <label for="Mozambique">Mozambique</label>
+    <label for="Uganda">Uganda</label>
+    <label for="valid">Valid</label>
+    <label for="invalid">Invalid</label>
+  </div>
+  <div class="filter_content">
+    <table id="content_table" >
+      <thead>
+      <tr>
+        <th scope ="col">Phone</th>
+        <th scope ="col">Name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="table-row"th:each="customer: ${customers}">
+        <td th:text="${customer.getPhone()}"/>
+        <td th:text="${customer.getName()}"/>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>
