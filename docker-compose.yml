@@ -1,7 +1,6 @@
+version: '3'
 services:
-    sqlite3:
-        image: nouchka/sqlite3:latest
-        ports: 
-        - 8080:8080
-        environment:
-        - SQLITE_DATABASE=sample.db
+  app:
+    build: .
+    ports:
+      - "8080:8080"
