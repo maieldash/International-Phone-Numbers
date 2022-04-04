@@ -1,4 +1,4 @@
-# international_phone_numbers
+# International Phone Numbers
 
 ## Getting Started
 
